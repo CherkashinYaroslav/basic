@@ -78,30 +78,13 @@
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <?php
-          $s = [];
-          $total = 0;
-          foreach ($q as $q_s)
-          {
-              if (array_key_exists($q_s['service_id'], $q_s))
-              {
-                  $s[$q_s['service_id']] +=1;
-              } else
-              {
-                  $s[$q_s['service_id']] =1;
-              }
-          }
-          $total = $p['totalCount'];
-          echo "<li class=\"active\"><a href=\"\">All $total</a></li>";
-
-          foreach ($s as $k=>$v)
-          {
-              echo "<li><a href=\"\"><span class=\"label-id\">$v</span>$k</a></li>";
-          }
-
-
-
-          ?>
+<!--          --><?php
+//          echo "<li class=\"active\"><a href=\"\">All $counter->all</a></li>";
+//          foreach ($counter->unique as $k => $serv) {
+//              echo "<li><a href=\"\"><span class=\"label-id\">$serv</span>$k</a></li>";
+//          }
+//
+//          ?>
           </ul>
         </div>
       </th>
@@ -124,34 +107,29 @@
     </thead>
     <tbody>
     <?php
-    var_dump($p);
-    foreach ($q as $s_q)
-    {
-        $id = $s_q["id"];
-        $user = $s_q['user_id'];
-        $link = $s_q['link'];
-        $quantity = $s_q['quantity'];
-        $service = $s_q['service_id'];
-        $status = $s_q['status'];
-        $created_at = date("Y-m-d",$s_q['created_at']);
-        $created_clock = date("H:m:s",$s_q['created_at']);
-        $mode = $s_q['mode'];
-        echo "<tr>
-      <td>$id</td>
-      <td>$user</td>
-      <td class=\"link\">$link</td>
-      <td>$quantity</td>
+              foreach ($provider->models as $m) {
+                  $status = $m->statusMapping()[$m->status];
+                  $mode = $m->modeMapping()[$m->mode];
+                  $name = $m->users->first_name;
+                  $surname = $m->users->last_name;
+                  $date = date('Y-m-d', $m->created_at);
+                  $clock = date('H:m:s', $m->created_at);
+                  echo "<tr>
+      <td>$m->id</td>
+      <td>$name $surname</td>
+      <td class=\"link\">$m->link</td>
+      <td>$m->quantity</td>
       <td class=\"service\">
-        <span class=\"label-id\">$service</span>$service
+        <span class=\"label-id\">service</span>service
       </td>
-      <td>$status</td>
+      <td>$status </td>
       <td>$mode</td>
-      <td><span class=\"nowrap\">$created_at</span><span class=\"nowrap\">$created_clock</span></td>
+      <td><span class=\"nowrap\">$date</span><span class=\"nowrap\">$clock</span></td>
     </tr>
     ";
-    }
-    ?>
+              }
 
+          ?>
     </tbody>
   </table>
   <div class="row">
@@ -176,7 +154,7 @@
 
     </div>
     <div class="col-sm-4 pagination-counters">
-        <?php echo $p['offset'] ?> to <?php echo $p['offset'] + 100 ?> of <?php echo $p['totalCount'] ?>
+        <?php echo $provider->pagination->page ?> to <?php echo $provider->pagination->limit ?> of <?php echo $provider->totalCount ?>
 </div>
 
   </div

@@ -70,7 +70,7 @@
         "psr-4": {
             "app\\filters\\":  "filters",
             "app\\sorters\\":  "sorters",
-            "app\\searcher\\":  "searcher"
+            "app\\counter\\": "counter"
         }
     },
     "repositories": [

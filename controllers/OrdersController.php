@@ -3,8 +3,9 @@
 namespace app\controllers;
 
 use app\models\OrderModel;
-use app\models\ServiceModel;
-use app\models\UserModel;
+use app\models\search\OrdersSearch;
+use app\counter\Counter;
+use Yii;
 use yii\data\Pagination;
 
 class OrdersController extends BaseAccessController
@@ -43,34 +44,15 @@ class OrdersController extends BaseAccessController
         return OrderModel::$MODE_MAPPING;
     }
 
+    //
     public function actionIndex()
     {
-        $model = new OrderModel();
-        $q = $model->initQuery()->applyFilters()->applySorter()->applySearcher()->getQuery();
-        $pagination = new Pagination(['totalCount' => $q->count(), 'pageSizeLimit' => [1, 100], 'defaultPageSize' => 100]);
+        $model = new OrdersSearch();
+        $dataProvider = $model->search(Yii::$app->request->queryParams);
+        $counter = new Counter();
+        $counter->countUniqueSum($dataProvider->query, 'service_id');
 
-        $pagVal['offset'] = $pagination->offset;
-        $pagVal['limit'] = $pagination->limit;
-        $pagVal['totalCount'] = $q->count();
-
-
-        $q = array_map(function ($row) {
-            $row['status'] = OrderModel::$STATUS_MAPPING[(int) $row['status']];
-            $row['mode'] = OrderModel::$MODE_MAPPING[(int) $row['mode']];
-            $row['service_id'] = ServiceModel::find()->where(['id' => $row['service_id']])->asArray()->all()[0]['name'];
-            $u = UserModel::find()->where(['id' => $row['user_id'] ])->asArray()->all()[0];
-            $row['user_id'] = $u['first_name'] . " " . $u['last_name'];
-            return $row;
-        },
-            $q->offset($pagination->offset)
-                ->limit($pagination->limit)
-                ->asArray()
-                ->all());
-
-
-
-
-        return $this->render('orders', ["q" => $q, 'p' => $pagVal]);
+        return $this->render('orders', ['model' => $model, 'provider' => $dataProvider]);
     }
 
     public function actions()
