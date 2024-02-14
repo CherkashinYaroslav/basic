@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use app\models\OrderModel;
 use app\models\search\OrdersSearch;
-use app\counter\Counter;
 use Yii;
 use yii\data\Pagination;
 
@@ -30,29 +29,24 @@ class OrdersController extends BaseAccessController
 
     }
 
-    public function actionGetStatuses()
-    {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-        return OrderModel::$STATUS_MAPPING;
-    }
-
-    public function actionGetModes()
-    {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-        return OrderModel::$MODE_MAPPING;
-    }
-
     //
     public function actionIndex()
     {
         $model = new OrdersSearch();
         $dataProvider = $model->search(Yii::$app->request->queryParams);
-        $counter = new Counter();
-        $counter->countUniqueSum($dataProvider->query, 'service_id');
 
-        return $this->render('orders', ['model' => $model, 'provider' => $dataProvider]);
+        return $this->render('orders', ['model' => $model, 'provider' => $dataProvider,
+            'counter_ser' => $model->searchFoCounter(Yii::$app->request->queryParams)->asArray()->all(),
+            'pages' => $dataProvider->pagination]);
+    }
+
+    public function beforeAction($action)
+    {
+        if (Yii::$app->request->get('lang') != null) {
+            Yii::$app->language = Yii::$app->request->get('lang');
+        }
+
+        return true;
     }
 
     public function actions()

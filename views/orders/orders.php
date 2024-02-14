@@ -1,27 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/custom.css" rel="stylesheet">
-  <style>
-    .label-default{
-    border: 1px solid #ddd;
-      background: none;
-      color: #333;
-      min-width: 30px;
-      display: inline-block;
-    }
-  </style>
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-</head>
-<body>
 <nav class="navbar navbar-fixed-top navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -41,12 +17,12 @@
 </nav>
 <div class="container-fluid">
   <ul class="nav nav-tabs p-b">
-    <li class="active"><a href="#">All orders</a></li>
-    <li><a href="#">Pending</a></li>
-    <li><a href="#">In progress</a></li>
-    <li><a href="#">Completed</a></li>
-    <li><a href="#">Canceled</a></li>
-    <li><a href="#">Error</a></li>
+    <li class="active"><a href="#"><?php echo \Yii::t('app', 'All orders'); ?></a></li>
+    <li><a href="#"><?php echo \Yii::t('app', 'Pending'); ?></a></li>
+    <li><a href="#"><?php echo \Yii::t('app', 'In progress'); ?></a></li>
+    <li><a href="#"><?php echo \Yii::t('app', 'Completed'); ?></a></li>
+    <li><a href="#"><?php echo \Yii::t('app', 'Canceled'); ?></a></li>
+    <li><a href="#"><?php echo \Yii::t('app', 'Error'); ?></a></li>
     <li class="pull-right custom-search">
       <form class="form-inline" action="/admin/orders" method="get">
         <div class="input-group">
@@ -54,9 +30,9 @@
           <span class="input-group-btn search-select-wrap">
 
             <select class="form-control search-select" name="search-type">
-              <option value="1" selected="">Order ID</option>
-              <option value="2">Link</option>
-              <option value="3">Username</option>
+              <option value="1" selected=""><?php echo \Yii::t('app', 'Order'); ?> ID</option>
+              <option value="2"><?php echo \Yii::t('app', 'Link'); ?></option>
+              <option value="3"><?php echo \Yii::t('app', 'Username'); ?></option>
             </select>
             <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </span>
@@ -64,35 +40,47 @@
       </form>
     </li>
   </ul>
+    <div class="dropdown">
+        <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <?php echo \Yii::t('app', 'Lang'); ?>
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="">Русский</a></li>
+            <li><a href="">Английский</a></li>
+        </ul>
+    </div>
   <table class="table order-table">
     <thead>
     <tr>
       <th>ID</th>
-      <th>User</th>
-      <th>Link</th>
-      <th>Quantity</th>
+      <th><?php echo \Yii::t('app', 'User'); ?></th>
+      <th><?php echo \Yii::t('app', 'Link'); ?></th>
+      <th><?php echo \Yii::t('app', 'Quantity'); ?></th>
       <th class="dropdown-th">
         <div class="dropdown">
           <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Service
+              <?php echo \Yii::t('app', 'Service'); ?>
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-<!--          --><?php
-//          echo "<li class=\"active\"><a href=\"\">All $counter->all</a></li>";
-//          foreach ($counter->unique as $k => $serv) {
-//              echo "<li><a href=\"\"><span class=\"label-id\">$serv</span>$k</a></li>";
-//          }
-//
-//          ?>
+          <?php
+          echo "<li class=\"active\"><a href=\"\">All $provider->totalCount</a></li>";
+    foreach ($counter_ser as $serv) {
+        $name = \Yii::t('app', $serv['name']);
+        $ctn = $serv['cnt'];
+        echo "<li><a href=\"\"><span class=\"label-id\">$ctn</span>$name</a></li>";
+    }
+
+    ?>
           </ul>
         </div>
       </th>
-      <th>Status</th>
+      <th><?php echo \Yii::t('app', 'Status'); ?></th>
       <th class="dropdown-th">
         <div class="dropdown">
           <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Mode
+              <?php echo \Yii::t('app', 'Mode'); ?>
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -102,34 +90,36 @@
           </ul>
         </div>
       </th>
-      <th>Created</th>
+      <th><?php echo \Yii::t('app', 'Created'); ?></th>
     </tr>
     </thead>
     <tbody>
     <?php
-              foreach ($provider->models as $m) {
-                  $status = $m->statusMapping()[$m->status];
-                  $mode = $m->modeMapping()[$m->mode];
-                  $name = $m->users->first_name;
-                  $surname = $m->users->last_name;
-                  $date = date('Y-m-d', $m->created_at);
-                  $clock = date('H:m:s', $m->created_at);
-                  echo "<tr>
+                  foreach ($provider->getModels() as $m) {
+                      $status = \Yii::t('app', $m->statusMapping()[$m->status]);
+                      $mode = Yii::t('app', $m->modeMapping()[$m->mode]);
+                      $name = $m->users->first_name;
+                      $surname = $m->users->last_name;
+                      $serviceName = \Yii::t('app', $m->services->name);
+                      $serviceId = $m->services->id;
+                      $date = date('Y-m-d', $m->created_at);
+                      $clock = date('H:m:s', $m->created_at);
+                      echo "<tr>
       <td>$m->id</td>
       <td>$name $surname</td>
       <td class=\"link\">$m->link</td>
       <td>$m->quantity</td>
       <td class=\"service\">
-        <span class=\"label-id\">service</span>service
+        <span class=\"label-id\">$serviceId</span>$serviceName
       </td>
       <td>$status </td>
       <td>$mode</td>
       <td><span class=\"nowrap\">$date</span><span class=\"nowrap\">$clock</span></td>
     </tr>
     ";
-              }
+                  }
 
-          ?>
+    ?>
     </tbody>
   </table>
   <div class="row">
@@ -152,14 +142,14 @@
         </ul>
       </nav>
 
+
     </div>
     <div class="col-sm-4 pagination-counters">
-        <?php echo $provider->pagination->page ?> to <?php echo $provider->pagination->limit ?> of <?php echo $provider->totalCount ?>
+        <?php echo $provider->pagination->page * $provider->pagination->limit ?> to <?php echo ($provider->pagination->page + 1) * $provider->pagination->limit ?> of <?php echo $provider->totalCount ?>
 </div>
 
-  </div
+  </div>
 </div>
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-</body>
-<html>
+
+<script src=<?php echo "\""; echo Yii::getAlias('@web/js/jquery.min.js'); echo "\"" ?>></script>
+    <script src=<?php echo "\""; echo Yii::getAlias('@web/js/bootstrap.min.js'); echo "\"" ?>></script>
