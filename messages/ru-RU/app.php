@@ -36,4 +36,7 @@ return [
     'Mentions User Followers' => 'Упоминает подписчиков пользователя',
     'Mentions Media Likers' => 'Упоминание лайков медиа',
     'Lang' => 'Язык',
+    'All' => 'Все',
+    'Search' => 'Поиск',
+    'Search orders' => 'Поиск заказов',
 ];

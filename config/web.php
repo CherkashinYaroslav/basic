@@ -6,7 +6,7 @@ $db = require __DIR__.'/db.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'languageSwitcher'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
@@ -52,12 +52,15 @@ $config = [
                 ],
             ],
         ],
+        'languageSwitcher' => [
+            'class' => 'app\widgets\languageSwitcher',
+        ],
         'db' => $db,
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'orders/<status>' => 'orders/index',
+                'orders/list/<status>' => 'orders/list',
             ],
         ],
     ],

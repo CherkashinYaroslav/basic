@@ -16,40 +16,60 @@
   </div>
 </nav>
 <div class="container-fluid">
-  <ul class="nav nav-tabs p-b">
-    <li class="active"><a href="#"><?php echo \Yii::t('app', 'All orders'); ?></a></li>
-    <li><a href="#"><?php echo \Yii::t('app', 'Pending'); ?></a></li>
-    <li><a href="#"><?php echo \Yii::t('app', 'In progress'); ?></a></li>
-    <li><a href="#"><?php echo \Yii::t('app', 'Completed'); ?></a></li>
-    <li><a href="#"><?php echo \Yii::t('app', 'Canceled'); ?></a></li>
-    <li><a href="#"><?php echo \Yii::t('app', 'Error'); ?></a></li>
-    <li class="pull-right custom-search">
-      <form class="form-inline" action="/admin/orders" method="get">
-        <div class="input-group">
-          <input type="text" name="search" class="form-control" value="" placeholder="Search orders">
-          <span class="input-group-btn search-select-wrap">
 
-            <select class="form-control search-select" name="search-type">
-              <option value="1" selected=""><?php echo \Yii::t('app', 'Order'); ?> ID</option>
-              <option value="2"><?php echo \Yii::t('app', 'Link'); ?></option>
-              <option value="3"><?php echo \Yii::t('app', 'Username'); ?></option>
-            </select>
-            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-            </span>
-        </div>
-      </form>
+
+    <?php
+
+    use app\widgets\languageSwitcher;
+    use yii\helpers\Html;
+    use yii\helpers\Url;
+    use yii\widgets\ActiveForm;
+    use yii\widgets\LinkPager;
+    use yii\widgets\Menu;
+
+    echo Menu::widget([
+        'items' => [
+            ['label' => \Yii::t('app', 'All'), 'url' => ['orders/list']],
+            ['label' => \Yii::t('app', 'Pending'), 'url' => ['orders/list/Pending']],
+            ['label' => \Yii::t('app', 'In progress'), 'url' => ['orders/list/In progress']],
+            ['label' => \Yii::t('app', 'Completed'), 'url' => ['orders/list/Completed']],
+            ['label' => \Yii::t('app', 'Canceled'), 'url' => ['orders/list/Canceled']],
+            ['label' => \Yii::t('app', 'Error'), 'url' => ['orders/list/Error']],
+        ],
+        'options' => [
+            'class' => 'nav nav-tabs p-b',
+        ],
+        'linkTemplate' => '<a href="{url}"><span>{label}</span></a>',
+
+    ]);
+    ?>
+  <ul class="nav nav-tabs p-b">
+
+    <li class="pull-right custom-search">
+        <?php ActiveForm::begin([
+            'method' => 'GET',
+            'action' => Url::to(['orders/list']),
+            'enableClientScript' => true,
+            'class' => 'form-inline',
+        ]); ?>
+
+        <?= Html::input('text', 'search', '', ['placeholder' => \Yii::t('app', 'Search orders'), 'class' => 'form-control search-select']) ?>
+        <?= Html::dropDownList('search-type', [],
+            [
+                \Yii::t('app', 'Order'),
+                \Yii::t('app', 'Link'),
+                \Yii::t('app', 'Username'),
+            ],
+            ['label' => 'Please select']) ?>
+        <?= Html::submitButton('', ['value' => 'print', 'class' => 'btn btn-default glyphicon glyphicon-search']) ?>
+        <?php ActiveForm::end(); ?>
     </li>
   </ul>
-    <div class="dropdown">
-        <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <?php echo \Yii::t('app', 'Lang'); ?>
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a href="">Русский</a></li>
-            <li><a href="">Английский</a></li>
-        </ul>
-    </div>
+    <?= languageSwitcher::Widget() ?>
+
+
+
+
   <table class="table order-table">
     <thead>
     <tr>
@@ -59,35 +79,41 @@
       <th><?php echo \Yii::t('app', 'Quantity'); ?></th>
       <th class="dropdown-th">
         <div class="dropdown">
-          <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-              <?php echo \Yii::t('app', 'Service'); ?>
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <?php echo \Yii::t('app', 'Service'); ?>
+
           <?php
-          echo "<li class=\"active\"><a href=\"\">All $provider->totalCount</a></li>";
+          echo " <br> <span>Total $provider->totalCount</span>"; ?>
+          <?php
+          usort($counter_ser, function ($a, $b) {
+              return (int) ($a['cnt'] < $b['cnt']);
+          });
     foreach ($counter_ser as $serv) {
         $name = \Yii::t('app', $serv['name']);
         $ctn = $serv['cnt'];
-        echo "<li><a href=\"\"><span class=\"label-id\">$ctn</span>$name</a></li>";
+        $itemArr[$serv['service_id']] = $ctn.' '.$name;
     }
 
-    ?>
-          </ul>
+    ActiveForm::begin([
+        'method' => 'GET',
+        'action' => Url::to(['orders/list']),
+        'enableClientScript' => true,
+    ]); ?>
+
+
+        <?= Html::dropDownList('service_id', [],
+            $itemArr,
+            ['label' => 'Please select']) ?>
         </div>
       </th>
       <th><?php echo \Yii::t('app', 'Status'); ?></th>
       <th class="dropdown-th">
         <div class="dropdown">
-          <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
               <?php echo \Yii::t('app', 'Mode'); ?>
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li class="active"><a href="">All</a></li>
-            <li><a href="">Manual</a></li>
-            <li><a href="">Auto</a></li>
-          </ul>
+              <?= Html::dropDownList('mode', [],
+                  array_map(function ($mode) {
+                      return \Yii::t('app', $mode);
+                  }, $model->modeMapping()),
+                  ['label' => 'Please select']) ?>
         </div>
       </th>
       <th><?php echo \Yii::t('app', 'Created'); ?></th>
@@ -122,24 +148,25 @@
     ?>
     </tbody>
   </table>
+    <?= Html::submitButton(\Yii::t('app', 'Search'), ['class' => 'btn btn-default']) ?>
+
+    <?php ActiveForm::end(); ?>
   <div class="row">
     <div class="col-sm-8">
+        <?php
+    $form = ActiveForm::begin([
+        'method' => 'GET',
+        'action' => Url::to(['csv/export'.'?'.http_build_query(Yii::$app->request->queryParams)]),
+        'enableClientScript' => true,
+    ]); ?>
 
+        <?= Html::submitButton('Export CSV', ['name' => 'print', 'value' => 'print', 'class' => 'btn btn-default']) ?>
+        <?php ActiveForm::end(); ?>
       <nav>
-        <ul class="pagination">
-          <li class="disabled"><a href="" aria-label="Previous">&laquo;</a></li>
-          <li class="active"><a href="">1</a></li>
-          <li><a href="">2</a></li>
-          <li><a href="">3</a></li>
-          <li><a href="">4</a></li>
-          <li><a href="">5</a></li>
-          <li><a href="">6</a></li>
-          <li><a href="">7</a></li>
-          <li><a href="">8</a></li>
-          <li><a href="">9</a></li>
-          <li><a href="">10</a></li>
-          <li><a href="" aria-label="Next">&raquo;</a></li>
-        </ul>
+
+          <?= LinkPager::widget([
+              'pagination' => $pages,
+          ]); ?>
       </nav>
 
 
@@ -147,9 +174,13 @@
     <div class="col-sm-4 pagination-counters">
         <?php echo $provider->pagination->page * $provider->pagination->limit ?> to <?php echo ($provider->pagination->page + 1) * $provider->pagination->limit ?> of <?php echo $provider->totalCount ?>
 </div>
-
+x
   </div>
 </div>
 
-<script src=<?php echo "\""; echo Yii::getAlias('@web/js/jquery.min.js'); echo "\"" ?>></script>
-    <script src=<?php echo "\""; echo Yii::getAlias('@web/js/bootstrap.min.js'); echo "\"" ?>></script>
+<script src=<?php echo '"';
+    echo Yii::getAlias('@web/js/jquery.min.js');
+    echo '"' ?>></script>
+    <script src=<?php echo '"';
+    echo Yii::getAlias('@web/js/bootstrap.min.js');
+    echo '"' ?>></script>

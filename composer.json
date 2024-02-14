@@ -70,7 +70,8 @@
     "autoload": {
         "psr-4": {
             "app\\filters\\":  "filters",
-            "app\\sorters\\":  "sorters"
+            "app\\sorters\\":  "sorters",
+            "app\\services\\": "Services"
         }
     },
     "repositories": [
