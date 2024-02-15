@@ -46,9 +46,10 @@
   <ul class="nav nav-tabs p-b">
 
     <li class="pull-right custom-search">
-        <?php ActiveForm::begin([
+        <?php
+        ActiveForm::begin([
             'method' => 'GET',
-            'action' => Url::to(['orders/list']),
+            'action' => Url::to(['orders/list', 'status' => isset(Yii::$app->request->queryParams['status']) ? Yii::$app->request->queryParams['status'] : '']),
             'enableClientScript' => true,
             'class' => 'form-inline',
         ]); ?>
@@ -87,6 +88,7 @@
           usort($counter_ser, function ($a, $b) {
               return (int) ($a['cnt'] < $b['cnt']);
           });
+    $itemArr = [];
     foreach ($counter_ser as $serv) {
         $name = \Yii::t('app', $serv['name']);
         $ctn = $serv['cnt'];
@@ -172,7 +174,12 @@
 
     </div>
     <div class="col-sm-4 pagination-counters">
-        <?php echo $provider->pagination->page * $provider->pagination->limit ?> to <?php echo ($provider->pagination->page + 1) * $provider->pagination->limit ?> of <?php echo $provider->totalCount ?>
+        <?php
+        if ($provider->totalCount > 100) {
+            echo $provider->pagination->page * $provider->pagination->limit.' to';
+            echo ($provider->pagination->page + 1) * $provider->pagination->limit.'of';
+        }?>
+        <?php echo $provider->totalCount ?>
 </div>
 x
   </div>

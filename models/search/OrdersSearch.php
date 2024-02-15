@@ -76,10 +76,11 @@ class OrdersSearch extends OrderModel
 
     private function prepareParams($params)
     {
-        $paramSearchMapping = [0  => 'id', 1 => 'link', 2 => 'user_id'];
+        $paramSearchMapping = [0 => 'id', 1 => 'link', 2 => 'user_id'];
         if (isset($params['search-type'])) {
             $params[$paramSearchMapping[$params['search-type']]] = $params['search'];
         }
+
         return $params;
     }
 
