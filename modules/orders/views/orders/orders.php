@@ -24,7 +24,6 @@
     use yii\widgets\ActiveForm;
     use yii\widgets\LinkPager;
     use yii\widgets\Menu;
-    var_dump(Yii::$app->urlManager->rules);
     echo Menu::widget([
         'items' => [
             ['label' => Yii::t('app', 'All'), 'url' => ['/orders/list']],
