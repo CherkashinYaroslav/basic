@@ -8,6 +8,9 @@ use modules\orders\models\UserModel;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
+use yii\db\ActiveQuery;
+use yii\db\Query;
+use yii\db\QueryInterface;
 
 /**
  *  Класс модели поиска заказов
@@ -98,14 +101,8 @@ class OrdersSearch extends OrderModel
         $params = $this->prepareParams($params);
         $this->loadParams($params);
 
-        $query->andFilterWhere([
-            'mode' => $this->mode,
-            'service_id' => $this->service_id,
-            'status' => $this->status,
-        ]);
-        $query->andFilterWhere(['like', 'orders.id', $this->id])
-            ->andFilterWhere(['like', 'link', $this->link])
-            ->andFilterWhere(['like', 'users.first_name', $this->user_id]);
+        $query = $this->baseQueryFiltre($query);
+
 
         if (! Yii::$app->request->get('page')) {
             $dataProvider->pagination->page = 0;
@@ -123,9 +120,23 @@ class OrdersSearch extends OrderModel
     {
         $query = OrderModel::find()->select(['COUNT(service_id) AS cnt', 'services.name', 'service_id']);
         $query->joinWith(['services']);
-
+        $query = $this->baseQueryFiltre($query);
         $this->loadParams($params);
 
+
+        $query->groupBy(['services.name', 'service_id']);
+
+        return $query;
+
+    }
+
+    /**
+     * Алгоритм базовой фильтрации записей
+     * @param ActiveQuery $query
+     * @return ActiveQuery
+     */
+    private function baseQueryFiltre(ActiveQuery $query)
+    {
         $query->andFilterWhere([
             'mode' => $this->mode,
             'service_id' => $this->service_id,
@@ -136,10 +147,7 @@ class OrdersSearch extends OrderModel
             ->andFilterWhere(['like', 'link', $this->link])
             ->andFilterWhere(['like', 'users.first_name', $this->user_id]);
 
-        $query->groupBy(['services.name', 'service_id']);
-
         return $query;
-
     }
 
     /**
