@@ -1,19 +1,7 @@
 <?php
 
 return [
-    'defaultRoute' => 'orders/list',
     'components' => [
-        'i18n' => [
-            'class' => 'yii\i18n\PhpMessageSource',
-            'translations' => [
-                'app*' => [
-                    'fileMap' => [
-                        'app' => 'app.php',
-                        'app/error' => 'error.php',
-                    ],
-                ],
-            ],
-        ],
         'languageSwitcher' => [
             'class' => 'app\widgets\languageSwitcher',
         ],

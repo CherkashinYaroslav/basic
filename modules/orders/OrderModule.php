@@ -18,9 +18,14 @@ class OrderModule extends \yii\base\Module implements BootstrapInterface
         $app->getUrlManager()->addRules([
             [
                 'class' => 'yii\web\UrlRule',
-                'pattern' => 'orders/list/<status>',
-                'route' => 'orders/list',
+                'pattern' => '/orders/list/<status>',
+                'route' => 'orders/orders/list',
             ],
+            [
+                'class' => 'yii\web\UrlRule',
+                'pattern' => '/orders/list',
+                'route' => 'orders/orders/list',
+            ]
         ]);
     }
 }
