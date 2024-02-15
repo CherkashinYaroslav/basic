@@ -1,9 +1,9 @@
 <?php
 
-namespace app\controllers;
+namespace orders\controllers;
 
-use app\models\search\OrdersSearch;
-use app\Services\CSVService;
+use orders\models\search\OrdersSearch;
+use orders\services\CSVService;
 use Yii;
 
 class CsvController extends BaseAccessController

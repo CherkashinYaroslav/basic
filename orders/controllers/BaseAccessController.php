@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace orders\controllers;
 
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;

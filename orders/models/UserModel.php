@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace orders\models;
 
 use yii\db\ActiveRecord;
 

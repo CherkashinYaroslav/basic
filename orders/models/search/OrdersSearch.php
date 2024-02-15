@@ -1,8 +1,9 @@
 <?php
 
-namespace app\models\search;
+namespace orders\models\search;
 
-use app\models\OrderModel;
+use orders\models\OrderModel;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 
@@ -44,6 +45,10 @@ class OrdersSearch extends OrderModel
         $query->andFilterWhere(['like', 'orders.id', $this->id])
             ->andFilterWhere(['like', 'link', $this->link])
             ->andFilterWhere(['like', 'users.first_name', $this->user_id]);
+
+        if (! Yii::$app->request->get('page')) {
+            $dataProvider->pagination->page = 0;
+        }
 
         return $dataProvider;
     }

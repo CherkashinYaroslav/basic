@@ -6,10 +6,15 @@ $db = require __DIR__.'/db.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'languageSwitcher'],
+    'bootstrap' => ['log', 'orders'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
+    ],
+    'modules' => [
+        'orders' => [
+            'class' => 'orders\OrderModule',
+        ],
     ],
     'components' => [
         'request' => [
@@ -41,27 +46,13 @@ $config = [
                 ],
             ],
         ],
-        'i18n' => [
-            'translations' => [
-                'app*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'fileMap' => [
-                        'app' => 'app.php',
-                        'app/error' => 'error.php',
-                    ],
-                ],
-            ],
-        ],
-        'languageSwitcher' => [
-            'class' => 'app\widgets\languageSwitcher',
-        ],
         'db' => $db,
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'orders/list/<status>' => 'orders/list',
-                '<controller>/<action>' => '<controller>/<action>',
+                //                'orders/list/<status>' => 'orders/list',
+                //                '<controller>/<action>' => '<controller>/<action>',
             ],
         ],
     ],

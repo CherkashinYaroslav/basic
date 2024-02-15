@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Services;
+namespace orders\services;
 
 use Yii;
 
