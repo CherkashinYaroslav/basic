@@ -5,8 +5,15 @@ namespace orders\controllers;
 use orders\models\search\OrdersSearch;
 use Yii;
 
+/**
+ * Класс контроллера заказов
+ */
 class OrdersController extends BaseAccessController
 {
+    /**
+     * На основе переданных параметров запроса status, mode, service_id, search, search-type возращает вьб с данными
+     * @return string
+     */
     public function actionList()
     {
         $model = new OrdersSearch();
@@ -18,6 +25,9 @@ class OrdersController extends BaseAccessController
             'pages' => $dataProvider->pagination]);
     }
 
+    /**
+     * @return array
+     */
     public function actions()
     {
         return [

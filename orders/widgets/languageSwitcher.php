@@ -7,13 +7,23 @@ use yii\base\Widget;
 use yii\bootstrap5\ButtonDropdown;
 use yii\helpers\Url;
 
+/**
+ * Класс виджета переключения языка
+ */
 class languageSwitcher extends Widget
 {
+    /**
+     * массив хранащий сопастовление намиенований языков к их iso формату
+     * @var string[]
+     */
     public $languages = [
         'en-US' => 'English',
         'ru-RU' => 'Russian',
     ];
 
+    /**
+     * @return void
+     */
     public function init()
     {
         parent::init();
@@ -30,6 +40,10 @@ class languageSwitcher extends Widget
 
     }
 
+    /**
+     * @return void
+     * @throws \Throwable
+     */
     public function run()
     {
         $languages = $this->languages;

@@ -6,8 +6,15 @@ use orders\models\search\OrdersSearch;
 use orders\services\CSVService;
 use Yii;
 
+/**
+ * Класс контроллера CSV генератора
+ */
 class CsvController extends BaseAccessController
 {
+    /**
+     * Создает csv документ на основе переданных параметров запроса
+     * @return string
+     */
     public function actionExport()
     {
 
@@ -26,9 +33,12 @@ class CsvController extends BaseAccessController
             'quantity' => ['Raw'],
             'service_id' => ['Raw'],
             'status' => ['Raw'],
-            'created_at' => ['Datetime']], $csvFileName);
+            'created_at' => ['Datetime']]);
     }
 
+    /**
+     * @return array
+     */
     public function actions()
     {
         return [

@@ -3,10 +3,21 @@
 namespace orders\services;
 
 use Yii;
+use yii\db\QueryInterface;
 
+/**
+ * Класс сервис для работы с CSV
+ */
 class CSVService
 {
-    public static function createCSV($query, $coldefs, $csvFileName = null, $separator = ';')
+    /**
+     * Генерирует CSV строку
+     * @param QueryInterface $query Объект запроса из базы данных
+     * @param array $coldefs массив наименовнией столбцов с параметрами генерации строки
+     * @param string $separator разделитель столбцов, по умолчанию равен ;
+     * @return string
+     */
+    public static function createCSV($query, $coldefs, $separator = ';')
     {
         $returnVal = '';
         $r = '';
