@@ -32,7 +32,6 @@ class OrdersController extends BaseAccessController
     public function actionList()
     {
         $model = new OrdersSearch();
-        var_dump(Yii::$app->request->queryParams);
 
         $dataProvider = $model->search(Yii::$app->request->queryParams);
 

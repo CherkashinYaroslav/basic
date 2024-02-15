@@ -1,21 +1,11 @@
 <?php
 
 //TODO вынест в енв
-
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => env('DB_TYPE', 'mysql')
-        .':'
-        .'host='
-        .env('DB_HOST', '127.0.0.1')
-        .';'
-        .'port='
-        .env('DB_PORT', '3306')
-        .';'
-        .'dbname='
-        .env('DB_NAME', 'root'),
-    'username' => env('DB_USER'),
-    'password' => env('DB_PASSWORD'),
+    'dsn' => 'mysql:host=127.0.0.1;port=3306;dbname=test',
+    'username' => 'mysql',
+    'password' => 'Vpbest322',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)

@@ -12,6 +12,7 @@ COPY . /app
 RUN composer install
 RUN composer dumpautoload
 
-EXPOSE 8080
+
 CMD php yii migrate
+EXPOSE 8080
 CMD php yii serve 0.0.0.0

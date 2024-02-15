@@ -162,7 +162,7 @@
         'enableClientScript' => true,
     ]); ?>
 
-        <?= Html::submitButton('Export CSV', ['name' => 'print', 'value' => 'print', 'class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Export CSV', ['name' => 'print', 'class' => 'btn btn-default']) ?>
         <?php ActiveForm::end(); ?>
       <nav>
 
