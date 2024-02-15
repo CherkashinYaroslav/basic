@@ -51,8 +51,6 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                //                'orders/list/<status>' => 'orders/list',
-                //                '<controller>/<action>' => '<controller>/<action>',
             ],
         ],
     ],

@@ -121,9 +121,6 @@ class OrdersSearch extends OrderModel
      */
     public function searchFoCounter($params)
     {
-        //        select count(service_id), services.name, service_id  from orders
-        //                      JOIN services ON orders.service_id=services.id
-        //              group by services.name, service_id
         $query = OrderModel::find()->select(['COUNT(service_id) AS cnt', 'services.name', 'service_id']);
         $query->joinWith(['services']);
 

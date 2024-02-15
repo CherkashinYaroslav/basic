@@ -9,6 +9,36 @@ use yii\db\ActiveRecord;
  */
 class OrderModel extends ActiveRecord
 {
+
+    /**
+     * @var int айди статуса pending
+     */
+    public const int PENDING_ID = 0;
+    /**
+     * @var int айди статуса In progress
+     */
+    public const int IN_PROGRESS_ID = 1;
+    /**
+     * @var int айди статуса Completed
+     */
+    public const int COMPLETED_ID = 2;
+    /**
+     * @var int айди статуса Canceled
+     */
+    public const int CANCELED_ID = 3;
+    /**
+     * @var int айди статуса Error
+     */
+    public const int ERROR_ID = 4;
+
+    /**
+     * @var int айди мода Manual
+     */
+    public const int MANUAL_ID = 0;
+    /**
+     * @var int айди мода Auto
+     */
+    public const int AUTO_ID = 0;
     /**
      * @return string
      */
@@ -41,8 +71,8 @@ class OrderModel extends ActiveRecord
      */
     public function statusMapping()
     {
-        return [0 => 'Pending', 1 => 'In progress',
-            2 => 'Completed', 3 => 'Canceled', 4 => 'Error'];
+        return [$this::PENDING_ID => 'Pending', $this::IN_PROGRESS_ID => 'In progress',
+            $this::COMPLETED_ID => 'Completed', $this::CANCELED_ID => 'Canceled', $this::ERROR_ID => 'Error'];
     }
 
     /**
@@ -51,6 +81,6 @@ class OrderModel extends ActiveRecord
      */
     public function modeMapping()
     {
-        return [0 => 'Manual', 1 => 'Auto'];
+        return [$this::MANUAL_ID => 'Manual', $this::AUTO_ID => 'Auto'];
     }
 }
