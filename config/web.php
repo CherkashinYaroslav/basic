@@ -61,7 +61,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'orders/list/<status>' => 'orders/list',
-                '<controller>/<action>' => '<controller>/<action>'
+                '<controller>/<action>' => '<controller>/<action>',
             ],
         ],
     ],
