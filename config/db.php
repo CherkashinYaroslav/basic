@@ -3,7 +3,7 @@
 //TODO вынест в енв
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=db;port=3306;dbname=test',
+    'dsn' => 'mysql:host=127.0.0.1;port=3306;dbname=test',
     'username' => 'mysql',
     'password' => 'Vpbest322',
     'charset' => 'utf8',
