@@ -3,7 +3,7 @@ docker exec app php yii migrate --interactive 0
 
 
 ROUTES \
-/orders/orders/list - список заказов
+/orders/list - список заказов
 
 Для применения фильтров необходимо нажать кнопку Search под таблицей
 
