@@ -119,7 +119,7 @@ class OrdersSearch extends OrderModel
     public function searchFoCounter($params)
     {
         $query = OrderModel::find()->select(['COUNT(service_id) AS cnt', 'services.name', 'service_id']);
-        $query->joinWith(['services']);
+        $query->joinWith(['services', 'users']);
         $query = $this->baseQueryFiltre($query);
         $this->loadParams($params);
 
