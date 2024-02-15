@@ -61,7 +61,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'orders/list/<status>' => 'orders/list',
-                'csv/export' => 'csv/export'
+                '<controller>/<action>' => '<controller>/<action>'
             ],
         ],
     ],

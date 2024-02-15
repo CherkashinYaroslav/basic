@@ -13,6 +13,5 @@ RUN composer install
 RUN composer dumpautoload
 
 
-CMD php yii migrate
 EXPOSE 8080
-CMD php yii serve 127.0.0.1
+CMD php yii serve 0.0.0.0
