@@ -69,7 +69,7 @@
     },
     "autoload": {
         "psr-4": {
-            "orders\\": "orders"
+            "modules\\orders\\": "modules/orders"
         }
     },
     "repositories": [

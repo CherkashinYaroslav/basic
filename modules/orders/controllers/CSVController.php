@@ -1,9 +1,9 @@
 <?php
 
-namespace orders\controllers;
+namespace modules\orders\controllers;
 
-use orders\models\search\OrdersSearch;
-use orders\services\CSVService;
+use modules\orders\models\search\OrdersSearch;
+use modules\orders\services\CSVService;
 use Yii;
 
 /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace orders\controllers;
+namespace modules\orders\controllers;
 
-use orders\models\search\OrdersSearch;
+use modules\orders\models\search\OrdersSearch;
 use Yii;
 
 /**

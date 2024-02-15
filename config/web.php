@@ -13,7 +13,7 @@ $config = [
     ],
     'modules' => [
         'orders' => [
-            'class' => 'orders\OrderModule',
+            'class' => 'modules\orders\OrderModule',
         ],
     ],
     'components' => [

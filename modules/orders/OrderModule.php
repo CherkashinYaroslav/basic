@@ -1,6 +1,6 @@
 <?php
 
-namespace orders;
+namespace modules\orders;
 
 use Yii;
 use yii\base\BootstrapInterface;
@@ -18,8 +18,8 @@ class OrderModule extends \yii\base\Module implements BootstrapInterface
         $app->getUrlManager()->addRules([
             [
                 'class' => 'yii\web\UrlRule',
-                'pattern' => '/orders/list/<status>',
-                'route' => '/orders/list',
+                'pattern' => 'orders/list/<status>',
+                'route' => 'orders/list',
             ],
         ]);
     }

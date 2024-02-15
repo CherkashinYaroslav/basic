@@ -1,6 +1,6 @@
 <?php
 
-namespace orders\models;
+namespace modules\orders\models;
 
 use yii\db\ActiveRecord;
 
@@ -38,7 +38,7 @@ class OrderModel extends ActiveRecord
     /**
      * @var int айди мода Auto
      */
-    public const int AUTO_ID = 0;
+    public const int AUTO_ID = 1;
     /**
      * @return string
      */

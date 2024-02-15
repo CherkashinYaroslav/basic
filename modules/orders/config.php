@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'defaultRoute' => 'orders/list',
     'components' => [
         'i18n' => [
             'class' => 'yii\i18n\PhpMessageSource',

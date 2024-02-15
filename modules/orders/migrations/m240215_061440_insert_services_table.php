@@ -1,6 +1,6 @@
 <?php
 
-namespace orders\migrations;
+namespace modules\orders\migrations;
 
 use yii\db\Migration;
 

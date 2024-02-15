@@ -1,6 +1,6 @@
 <?php
 
-namespace orders\services;
+namespace modules\orders\services;
 
 use Yii;
 use yii\db\QueryInterface;

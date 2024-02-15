@@ -17,8 +17,8 @@
 </nav>
 <div class="container-fluid">
     <?php
-    use orders\widgets\languageSwitcher;
-    use Yii;
+
+    use modules\orders\widgets\languageSwitcher;
     use yii\helpers\Html;
     use yii\helpers\Url;
     use yii\widgets\ActiveForm;
