@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+
+
+
+  db:
+    image: mysql:latest
+    volumes:
+      - ./dump:/docker-entrypoint-initdb.d
+      - persistent:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Vpbest322
+      MYSQL_DATABASE: test
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: Vpbest322
+    ports:
+      - 3306:3306
+    networks:
+      - default
+
+
+
+  app:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    image: digitalocean.com/php
+    container_name: app1
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    volumes:
+      - ../app:/app
+      - ../php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ../migrations:/migrations
+#    depends_on:
+#        - db
+    networks:
+      - default
+
+
+
+volumes:
+  persistent:
