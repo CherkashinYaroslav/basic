@@ -1,20 +1,19 @@
 # Dockerfile
-FROM php:8.3
+FROM php:8.3-apache
 
-RUN apt-get update -y && apt-get install -y libzip-dev
-
+RUN apt-get update
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN docker-php-ext-install pdo zip pdo_mysql
+
 
 ADD app /var/www/app
 
 WORKDIR /var/www/app
 
 
-#
-#RUN composer install
-#RUN composer dumpautoload
-#
-#
-#EXPOSE 8080
-#CMD php yii serve 0.0.0.0
+RUN composer install
+RUN composer dumpautoload
+
+
+EXPOSE 8080
+CMD php yii serve 0.0.0.0

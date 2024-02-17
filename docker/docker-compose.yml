@@ -18,27 +18,26 @@ services:
     networks:
       - default
 
-
-
   app:
+    # Собираем из Dockerfile
     build:
+      # Корнем указываем корень основного проекта
       context: ../
       dockerfile: ./docker/Dockerfile
+    container_name: app
     image: digitalocean.com/php
-    container_name: app1
-    restart: unless-stopped
+    working_dir: /var/www/app
+    # Показываем наружу 80 порт
     ports:
-      - 8080:8080
-    volumes:
-      - ../app:/app
-      - ../php/local.ini:/usr/local/etc/php/conf.d/local.ini
-      - ../migrations:/migrations
-#    depends_on:
-#        - db
+      - "8080:8080"
+    # Подключаем к общей сети с другими контейнерами
     networks:
       - default
-
-
+    volumes:
+      - "../app:/var/www/app"
+      - "../docker:/var/www/docker"
+      - "../migrations:/var/www/migrations"
+      - "../php/local.ini:/usr/local/etc/php/conf.d/local.ini"
 
 volumes:
   persistent:
