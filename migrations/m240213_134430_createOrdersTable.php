@@ -1,6 +1,5 @@
 <?php
 
-namespace modules\orders\migrations;
 
 use yii\db\Migration;
 

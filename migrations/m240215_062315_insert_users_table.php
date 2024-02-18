@@ -1,8 +1,7 @@
 <?php
 
-namespace modules\orders\migrations;
 
-use Faker;
+
 use yii\db\Migration;
 
 /**
