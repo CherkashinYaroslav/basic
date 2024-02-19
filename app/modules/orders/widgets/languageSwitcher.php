@@ -28,8 +28,6 @@ class languageSwitcher extends Widget
     public function init()
     {
         parent::init();
-        var_dump(Yii::$app->language);
-        var_dump(Yii::$app->sourceLanguage);
         $session = Yii::$app->session;
         $languageNew = Yii::$app->request->get('language');
         if ($languageNew) {

@@ -1,4 +1,6 @@
-docker-composer up -d \
+cd docker \
+docker-compose up -d \
+docker exec app cp .env.example .env \
 docker exec app php yii migrate --interactive 0 
 
 

@@ -12,6 +12,7 @@ use yii\db\ActiveQuery;
 
 /**
  *  Класс модели поиска заказов
+ * {@inheritDoc} не определять типы у свойст
  */
 class OrdersSearch extends Model
 {
@@ -23,7 +24,7 @@ class OrdersSearch extends Model
     /**
      * @var string данные для поиска по одному из полей id, user, link
      */
-    public string $search;
+    public $search;
 
     /**
      * @var int тип поиска, принимает значения ID_SEARCH_PARAM_MAPPING, USER_SEARCH_PARAM_MAPPING , LINK_SEARCH_PARAM_MAPPING
@@ -114,7 +115,7 @@ class OrdersSearch extends Model
      * На основе переданных параметров осущесвтялет выборку из базы и заполняет ДатаПроавйдер
      *
      * @param  array  $params
-     * @return ActiveDataProvider
+     * @return ActiveDataProvider|false
      */
     public function search()
     {
@@ -148,7 +149,7 @@ class OrdersSearch extends Model
      *  На основе переданных параметров осущесвтялет выборку из базы и заполняет ДатаПроавйдер для подсчета сервисов
      *
      * @param  array  $params
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|false
      */
     public function searchFoCounter()
     {
