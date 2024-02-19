@@ -69,28 +69,46 @@ class OrdersSearch extends Model
     /**
      * @var int константа соответствия значения типа поиска к типу поиска
      */
-    public const int ID_SEARCH_PARAM_MAPPING = 0;
+    public const ID_SEARCH_PARAM_MAPPING = 0;
 
     /**
      * @var int константа соответствия значения типа поиска к типу поиска
      */
-    public const int LINK_SEARCH_PARAM_MAPPING = 1;
+    public const LINK_SEARCH_PARAM_MAPPING = 1;
 
     /**
      * @var int константа соответствия значения типа поиска к типу поиска
      */
-    public const int USER_SEARCH_PARAM_MAPPING = 2;
+    public const USER_SEARCH_PARAM_MAPPING = 2;
 
-    public const int PAGE_SIZE = 100;
+    /**
+     * @var int Маскимальное количество записей на странице пагинации
+     */
+    public const PAGE_SIZE = 100;
 
+    /**
+     * @var string констанста наименования статуса пендинг
+     */
     public const PENDING_STATUS = 'Pending';
 
+    /**
+     * @var string константа наименования статуса ин прогресс
+     */
     public const IN_PROGRESS_STATUS = 'In progress';
 
+    /**
+     * @var string констанста наименования статуса комплитед
+     */
     public const COMPLETED_STATUS = 'Completed';
 
+    /**
+     * @var string константа наименования статуса кенселед
+     */
     public const CANCELED_STATUS = 'Canceled';
 
+    /**
+     * @var string константа наименования статуса еррор
+     */
     public const ERROR_STATUS = 'Error';
 
     /**
@@ -225,6 +243,10 @@ class OrdersSearch extends Model
         }
     }
 
+    /**
+     * Возвращает массив маппинга айди статуса к наименованию статуса без перевода
+     * @return string[]
+     */
     private function statusResolve()
     {
         return [

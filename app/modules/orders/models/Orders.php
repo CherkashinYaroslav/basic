@@ -62,32 +62,56 @@ class Orders extends ActiveRecord
         return 'orders';
     }
 
+    /**
+     * Возврщает текущий статус модели
+     * @return string
+     */
     public function getStatus()
     {
         return Yii::t('app', $this->statusMapping()[$this->status]);
     }
 
+    /**
+     * Возвращает текущий способ управления модели
+     * @return string
+     */
     public function getMode()
     {
         return Yii::t('app', $this->modeMapping()[$this->mode]);
     }
 
+    /**
+     * Возвращает полное имя пользователя
+     * @return string
+     */
     public function getUserFullName()
     {
         return $this->users->last_name.' '.$this->users->first_name;
     }
 
+    /**
+     * Возврщает текущее имя сервиса модели
+     * @return string
+     */
     public function getServiceNane()
     {
         return Yii::t('app',
             'orders.list.service.name.'.str_replace(' ', '_', strtolower($this->services->name)));
     }
 
+    /**
+     * Возвращает дайеттайм создания
+     * @return string
+     */
     public function getFullDatetime()
     {
         return date('Y-m-d', $this->created_at).' '.date('H:m:s', $this->created_at);
     }
 
+    /**
+     * Возвращает айди сервиса
+     * @return mixed
+     */
     public function getServiceId()
     {
         return $this->services->id;
