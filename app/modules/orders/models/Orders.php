@@ -2,6 +2,7 @@
 
 namespace orders\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -61,6 +62,37 @@ class Orders extends ActiveRecord
         return 'orders';
     }
 
+    public function getStatus()
+    {
+        return Yii::t('app', $this->statusMapping()[$this->status]);
+    }
+
+    public function getMode()
+    {
+        return Yii::t('app', $this->modeMapping()[$this->mode]);
+    }
+
+    public function getUserFullName()
+    {
+        return $this->users->last_name.' '.$this->users->first_name;
+    }
+
+    public function getServiceNane()
+    {
+        return Yii::t('app',
+            'orders.list.service.name.'.str_replace(' ', '_', strtolower($this->services->name)));
+    }
+
+    public function getFullDatetime()
+    {
+        return date('Y-m-d', $this->created_at).' '.date('H:m:s', $this->created_at);
+    }
+
+    public function getServiceId()
+    {
+        return $this->services->id;
+    }
+
     /**
      * Устанавливает связь с таблицей пользователей
      *
@@ -88,8 +120,13 @@ class Orders extends ActiveRecord
      */
     public static function statusMapping()
     {
-        return [self::PENDING_ID => 'Pending', self::IN_PROGRESS_ID => 'In progress',
-            self::COMPLETED_ID => 'Completed', self::CANCELED_ID => 'Canceled', self::ERROR_ID => 'Error'];
+        return [
+            self::PENDING_ID => 'orders.list.status.pending',
+            self::IN_PROGRESS_ID => 'orders.list.status.in_progress',
+            self::COMPLETED_ID => 'orders.list.status.completed',
+            self::CANCELED_ID => 'orders.list.status.canceled',
+            self::ERROR_ID => 'orders.list.status.error',
+        ];
     }
 
     /**
@@ -99,6 +136,9 @@ class Orders extends ActiveRecord
      */
     public static function modeMapping()
     {
-        return [self::MANUAL_ID => 'Manual', self::AUTO_ID => 'Auto'];
+        return [
+            self::MANUAL_ID => 'orders.list.mode.manual',
+            self::AUTO_ID => 'orders.list.mode.auto',
+        ];
     }
 }

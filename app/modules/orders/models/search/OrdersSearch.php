@@ -9,6 +9,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\db\ActiveQuery;
+use function Symfony\Component\String\s;
 
 /**
  *  Класс модели поиска заказов
@@ -30,11 +31,6 @@ class OrdersSearch extends Model
      * @var int тип поиска, принимает значения ID_SEARCH_PARAM_MAPPING, USER_SEARCH_PARAM_MAPPING , LINK_SEARCH_PARAM_MAPPING
      */
     public $search_type;
-
-    /**
-     * @var string класс модели, являющейся представлением строк из БД
-     */
-    private $model = Orders::class;
 
     /**
      * @var int айди заказа
@@ -86,6 +82,14 @@ class OrdersSearch extends Model
      */
     public const int USER_SEARCH_PARAM_MAPPING = 2;
 
+    public const int PAGE_SIZE = 100;
+
+    public const PENDING_STATUS = 'Pending';
+    public const IN_PROGRESS_STATUS = 'In progress';
+    public const COMPLETED_STATUS = 'Completed';
+    public const CANCELED_STATUS = 'Canceled';
+    public const ERROR_STATUS = 'Error';
+
     /**
      * @return array[]
      */
@@ -103,10 +107,10 @@ class OrdersSearch extends Model
                 'targetAttribute' => ['service_id' => 'id'],
             ],
             [
-                ['status'], 'in', 'range' => $this->getModel()::statusMapping(),
+                ['status'], 'in', 'range' => $this->statusResolve(),
             ],
             [
-                ['mode'], 'in', 'range' => array_keys($this->getModel()::modeMapping()),
+                ['mode'], 'in', 'range' => array_keys(Orders::modeMapping()),
             ],
         ];
     }
@@ -136,7 +140,7 @@ class OrdersSearch extends Model
             ],
         ]);
 
-        $query = $this->baseQueryFiltre($query);
+        $this->baseQueryFiltre($query);
 
         if (! Yii::$app->request->get('page')) {
             $dataProvider->pagination->page = 0;
@@ -210,12 +214,23 @@ class OrdersSearch extends Model
      */
     private function transformParams()
     {
-        $statusFlip = array_flip($this->getModel()::statusMapping());
+        $statusFlip = array_flip($this->statusResolve());
         if (array_key_exists($this->status, $statusFlip)) {
             $this->statusId = $statusFlip[$this->status];
         } else {
             $this->statusId = '';
         }
+    }
+
+    private function statusResolve()
+    {
+        return [
+            Orders::PENDING_ID => self::PENDING_STATUS,
+            Orders::IN_PROGRESS_ID => self::IN_PROGRESS_STATUS,
+            Orders::COMPLETED_ID => self::COMPLETED_STATUS,
+            Orders::CANCELED_ID => self::CANCELED_STATUS,
+            Orders::ERROR_ID => self::ERROR_STATUS,
+        ];
     }
 
     /**
@@ -236,23 +251,13 @@ class OrdersSearch extends Model
     }
 
     /**
-     * Получени базовой модели
-     *
-     * @return string
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    /**
      * Получение правил пагинации
      *
      * @return Pagination
      */
     private function paginate()
     {
-        return new Pagination(['pageSizeLimit' => [1, 100], 'defaultPageSize' => 100]);
+        return new Pagination(['pageSizeLimit' => [1, self::PAGE_SIZE], 'defaultPageSize' => self::PAGE_SIZE]);
     }
 
     /**

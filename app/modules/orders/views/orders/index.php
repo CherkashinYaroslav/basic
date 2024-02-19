@@ -21,6 +21,7 @@
 
     use orders\widgets\languageSwitcher;
     use orders\widgets\ModeFilterWidget;
+    use orders\widgets\pageCounterWidget;
     use orders\widgets\ServiceFilterWidget;
     use yii\helpers\Html;
     use yii\helpers\Url;
@@ -48,28 +49,24 @@
     </thead>
     <tbody>
         <?php
-        foreach ($provider->getModels() as $m) {
-            $status = Yii::t('app',
-                'orders.list.status.'.str_replace(' ', '_', strtolower($m->statusMapping()[$m->status])));
-            $mode = Yii::t('app', 'orders.list.mode.'.strtolower($m->modeMapping()[$m->mode]));
-            $name = $m->users->first_name;
-            $surname = $m->users->last_name;
-            $serviceName = Yii::t('app',
-                'orders.list.service.name.'.str_replace(' ', '_', strtolower($m->services->name)));
-            $serviceId = $m->services->id;
-            $date = date('Y-m-d', $m->created_at);
-            $clock = date('H:m:s', $m->created_at);
+        foreach ($provider->getModels() as $model) {
+            $status = $model->getStatus();
+            $mode = $model->getMode();
+            $userName = $model->getUserFullName();
+            $serviceName = $model->getServiceNane();
+            $serviceId = $model->getServiceId();
+            $date = $model->getFullDatetime();
             echo "<tr>
-                      <td>$m->id</td>
-                      <td>$name $surname</td>
-                      <td class=\"link\">$m->link</td>
-                      <td>$m->quantity</td>
+                      <td>$model->id</td>
+                      <td>$userName</td>
+                      <td class=\"link\">$model->link</td>
+                      <td>$model->quantity</td>
                       <td class=\"service\">
                         <span class=\"label-id\">$serviceId</span>$serviceName
                       </td>
                       <td>$status </td>
                       <td>$mode</td>
-                      <td><span class=\"nowrap\">$date</span><span class=\"nowrap\">$clock</span></td>
+                      <td><span class=\"nowrap\">$date</span></td>
                     </tr>
                     ";
         }
@@ -94,13 +91,7 @@
 
     </div>
     <div class="col-sm-4 pagination-counters">
-        <?php
-if ($provider->totalCount > 100) {
-    echo $provider->pagination->page * $provider->pagination->limit.' to';
-    echo ($provider->pagination->page + 1) * $provider->pagination->limit.'of';
-}
-    ?>
-        <?php echo $provider->totalCount ?>
+        <?= PageCounterWidget::widget(['provider' => $provider]) ?>
 </div>
   </div>
 </div>
