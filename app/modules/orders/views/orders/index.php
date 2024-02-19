@@ -23,16 +23,14 @@
     use orders\widgets\ModeFilterWidget;
     use orders\widgets\pageCounterWidget;
     use orders\widgets\ServiceFilterWidget;
+    use orders\widgets\TableVIewWidget;
     use yii\helpers\Html;
     use yii\helpers\Url;
     use yii\widgets\ActiveForm;
     use yii\widgets\LinkPager;
 
     ?>
-
     <?= languageSwitcher::widget() ?>
-
-
   <table class="table order-table">
     <thead>
     <tr>
@@ -43,34 +41,12 @@
         <?= ServiceFilterWidget::widget(['counterSer' => $counterSer]) ?>
 
       <th><?php echo Yii::t('app', 'orders.list.table.column.status'); ?></th>
-      <?= ModeFilterWidget::widget(['model' => $model]) ?>
+        <?= ModeFilterWidget::widget(['model' => $model]) ?>
       <th><?php echo Yii::t('app', 'orders.list.table.column.created'); ?></th>
     </tr>
     </thead>
     <tbody>
-        <?php
-        foreach ($provider->getModels() as $model) {
-            $status = $model->getStatus();
-            $mode = $model->getMode();
-            $userName = $model->getUserFullName();
-            $serviceName = $model->getServiceNane();
-            $serviceId = $model->getServiceId();
-            $date = $model->getFullDatetime();
-            echo "<tr>
-                      <td>$model->id</td>
-                      <td>$userName</td>
-                      <td class=\"link\">$model->link</td>
-                      <td>$model->quantity</td>
-                      <td class=\"service\">
-                        <span class=\"label-id\">$serviceId</span>$serviceName
-                      </td>
-                      <td>$status </td>
-                      <td>$mode</td>
-                      <td><span class=\"nowrap\">$date</span></td>
-                    </tr>
-                    ";
-        }
-    ?>
+        <?= TableVIewWidget::widget(['provider' => $provider]) ?>
     </tbody>
   </table>
   <div class="row">

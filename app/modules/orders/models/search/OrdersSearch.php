@@ -9,7 +9,6 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\db\ActiveQuery;
-use function Symfony\Component\String\s;
 
 /**
  *  Класс модели поиска заказов
@@ -85,9 +84,13 @@ class OrdersSearch extends Model
     public const int PAGE_SIZE = 100;
 
     public const PENDING_STATUS = 'Pending';
+
     public const IN_PROGRESS_STATUS = 'In progress';
+
     public const COMPLETED_STATUS = 'Completed';
+
     public const CANCELED_STATUS = 'Canceled';
+
     public const ERROR_STATUS = 'Error';
 
     /**
