@@ -13,7 +13,7 @@ use yii\helpers\Url;
 class languageSwitcher extends Widget
 {
     /**
-     * массив хранащий сопастовление намиенований языков к их iso формату
+     * массив хранащий сопастовление наименований языков к их iso формату
      *
      * @var string[]
      */
