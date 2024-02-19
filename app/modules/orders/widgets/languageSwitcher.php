@@ -30,13 +30,12 @@ class languageSwitcher extends Widget
         parent::init();
         $session = Yii::$app->session;
         $languageNew = Yii::$app->request->get('language');
+        Yii::$app->sourceLanguage = 'ln-UN';
         if ($languageNew) {
             if (isset($this->languages[$languageNew]) and $languageNew != $session->get('language')) {
                 Yii::$app->language = $languageNew;
-                Yii::$app->sourceLanguage = $session->get('language');
                 $session->set('language', $languageNew);
             } else {
-                Yii::$app->sourceLanguage = 'ln-UN';
                 Yii::$app->language = $session->get('language');
             }
         }
@@ -57,7 +56,7 @@ class languageSwitcher extends Widget
             $temp = [];
             $temp['label'] = Yii::t('app', $language);
             $temp['url'] = Url::current(['language' => $code]);
-            array_push($items, $temp);
+            $items[] = $temp;
         }
 
         echo ButtonDropdown::widget([
