@@ -12,9 +12,9 @@ use yii\db\ActiveRecord;
  * @property string $link
  * @property int $quantity
  * @property int $service_id
- * @property bool $status
+ * @property int $status
  * @property int $created_at
- * @property bool $mode
+ * @property int $mode
  */
 class Orders extends ActiveRecord
 {
@@ -86,10 +86,10 @@ class Orders extends ActiveRecord
      *
      * @return string[]
      */
-    public function statusMapping()
+    public static function statusMapping()
     {
-        return [$this::PENDING_ID => 'Pending', $this::IN_PROGRESS_ID => 'In progress',
-            $this::COMPLETED_ID => 'Completed', $this::CANCELED_ID => 'Canceled', $this::ERROR_ID => 'Error'];
+        return [self::PENDING_ID => 'Pending', self::IN_PROGRESS_ID => 'In progress',
+            self::COMPLETED_ID => 'Completed', self::CANCELED_ID => 'Canceled', self::ERROR_ID => 'Error'];
     }
 
     /**
@@ -97,8 +97,8 @@ class Orders extends ActiveRecord
      *
      * @return string[]
      */
-    public function modeMapping()
+    public static function modeMapping()
     {
-        return [$this::MANUAL_ID => 'Manual', $this::AUTO_ID => 'Auto'];
+        return [self::MANUAL_ID => 'Manual', self::AUTO_ID => 'Auto'];
     }
 }

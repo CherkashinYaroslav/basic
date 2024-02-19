@@ -12,7 +12,7 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
         '@tests' => '@app/tests',
-        '@migrate-orders' => '@app/../migrations'
+        '@migrate-orders' => '@app/../migrations',
     ],
     'components' => [
         'cache' => [

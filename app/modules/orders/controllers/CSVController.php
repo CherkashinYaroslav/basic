@@ -26,8 +26,9 @@ class CsvController extends BaseAccessController
         header('Content-Disposition: attachment; filename='.$csvFileName);
         header('Content-Type: application/octet-stream');
         header('Content-Transfer-Encoding: binary');
+        $model->loadParams(Yii::$app->request->queryParams);
 
-        return CSVService::createCSV($model->search(Yii::$app->request->queryParams)->query, ['id' => ['Raw'],
+        return CSVService::createCSV($model->search()->query, ['id' => ['Raw'],
             'mode' => ['Raw'],
             'user_id' => ['Raw'],
             'link' => ['Raw'],
@@ -35,17 +36,5 @@ class CsvController extends BaseAccessController
             'service_id' => ['Raw'],
             'status' => ['Raw'],
             'created_at' => ['Datetime']]);
-    }
-
-    /**
-     * @return array
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-        ];
     }
 }

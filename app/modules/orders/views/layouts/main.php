@@ -28,6 +28,14 @@ use app\assets\AppAsset;
     <body>
     <?php $this->beginBody(); ?>
 
+    <?php $exception = Yii::$app->getErrorHandler()->exception ?>
+    <?php if ($exception) { ?>
+        <div>
+            <?= $exception->getMessage() ?>
+        </div>
+
+    <?php } else { ?>
+
 
     <div class="container-fluid">
 
@@ -39,6 +47,7 @@ use app\assets\AppAsset;
     </div>
 
     <?php $this->endBody(); ?>
+    <?php }?>
     </body>
     <html>
 <?php $this->endPage(); ?>

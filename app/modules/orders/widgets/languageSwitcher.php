@@ -28,6 +28,8 @@ class languageSwitcher extends Widget
     public function init()
     {
         parent::init();
+        var_dump(Yii::$app->language);
+        var_dump(Yii::$app->sourceLanguage);
         $session = Yii::$app->session;
         $languageNew = Yii::$app->request->get('language');
         if ($languageNew) {
@@ -36,8 +38,8 @@ class languageSwitcher extends Widget
                 Yii::$app->sourceLanguage = $session->get('language');
                 $session->set('language', $languageNew);
             } else {
-                Yii::$app->sourceLanguage = "ln-UN";
-                Yii::$app->language =  $session->get('language');
+                Yii::$app->sourceLanguage = 'ln-UN';
+                Yii::$app->language = $session->get('language');
             }
         }
     }
@@ -50,13 +52,12 @@ class languageSwitcher extends Widget
     public function run()
     {
         $languages = $this->languages;
-        $current = $languages[Yii::$app->language];
         unset($languages[Yii::$app->language]);
 
         $items = [];
         foreach ($languages as $code => $language) {
             $temp = [];
-            $temp['label'] = Yii::t("app", $language);
+            $temp['label'] = Yii::t('app', $language);
             $temp['url'] = Url::current(['language' => $code]);
             array_push($items, $temp);
         }

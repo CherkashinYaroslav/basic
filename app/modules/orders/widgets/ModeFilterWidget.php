@@ -17,8 +17,8 @@ class ModeFilterWidget extends Widget
 
         return $this->render('modes', [
             'modes' => [
-                $this->model::AUTO_ID => 'orders.list.mode.auto',
-                $this->model::MANUAL_ID => 'orders.list.mode.manual',
+                $this->model->getModel()::AUTO_ID => 'orders.list.mode.auto',
+                $this->model->getModel()::MANUAL_ID => 'orders.list.mode.manual',
             ],
         ]);
     }

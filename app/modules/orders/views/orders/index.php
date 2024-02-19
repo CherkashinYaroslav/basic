@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-fixed-top navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -49,7 +50,7 @@
         <?php
         foreach ($provider->getModels() as $m) {
             $status = Yii::t('app',
-                'orders.list.status.'.str_replace(' ', '_',strtolower($m->statusMapping()[$m->status])));
+                'orders.list.status.'.str_replace(' ', '_', strtolower($m->statusMapping()[$m->status])));
             $mode = Yii::t('app', 'orders.list.mode.'.strtolower($m->modeMapping()[$m->mode]));
             $name = $m->users->first_name;
             $surname = $m->users->last_name;
@@ -94,10 +95,10 @@
     </div>
     <div class="col-sm-4 pagination-counters">
         <?php
-    if ($provider->totalCount > 100) {
-        echo $provider->pagination->page * $provider->pagination->limit.' to';
-        echo ($provider->pagination->page + 1) * $provider->pagination->limit.'of';
-    }
+if ($provider->totalCount > 100) {
+    echo $provider->pagination->page * $provider->pagination->limit.' to';
+    echo ($provider->pagination->page + 1) * $provider->pagination->limit.'of';
+}
     ?>
         <?php echo $provider->totalCount ?>
 </div>

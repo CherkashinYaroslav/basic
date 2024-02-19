@@ -48,6 +48,6 @@ return [
     'orders.list.service.name.mentions_media_likers' => 'Mentions Media Likers',
     'language.english' => 'Eng',
     'language.russian' => 'Rus',
-    'language.change' => 'Change language'
+    'language.change' => 'Change language',
 
 ];

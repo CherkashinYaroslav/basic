@@ -42,6 +42,6 @@ return [
     'orders.list.service.name.mentions_media_likers' => 'Упоминание лайков медиа',
     'language.english' => 'Английский',
     'language.russian' => 'Русский',
-    'language.change' => 'Сменить язык'
+    'language.change' => 'Сменить язык',
 
 ];
