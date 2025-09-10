@@ -5,6 +5,19 @@ docker-compose up -d \
 docker exec app php yii migrate --interactive 0 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 ROUTES \
 /orders/list - список заказов
 
